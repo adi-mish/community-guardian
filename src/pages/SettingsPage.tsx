@@ -9,9 +9,14 @@ export function SettingsPage() {
         <div>
           <div className="cg-section-title">Privacy & limitations</div>
           <ul className="cg-checklist">
-            <li>All reports are synthetic and stored locally in your browser.</li>
-            <li>Digest generation may use AI when configured; a rule-based fallback is always available.</li>
-            <li>Digests are not emergency, medical, or legal advice.</li>
+            <li>All built-in reports are synthetic and stored locally in your browser.</li>
+            <li>
+              When AI is enabled and configured, only the selected reports are sent to the local server for digest
+              generation.
+            </li>
+            <li>AI output is parsed as strict JSON and validated; malformed output triggers deterministic fallback.</li>
+            <li>Digests are informational only, not emergency, medical, or legal advice.</li>
+            <li>Use general neighborhood names; avoid exact addresses or personal data.</li>
           </ul>
         </div>
 

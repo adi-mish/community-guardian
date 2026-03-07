@@ -21,7 +21,7 @@ import {
 type DigestState =
   | { status: 'idle' }
   | { status: 'loading' }
-  | { status: 'ready'; digest: Digest; message?: string }
+  | { status: 'ready'; digest: Digest; sourceReports: Report[]; message?: string }
   | { status: 'error'; error: string }
 
 function modeTone(mode: Digest['mode']) {
@@ -146,12 +146,13 @@ export function DigestPage() {
         typeof (data as { message?: unknown }).message === 'string'
           ? ((data as { message?: string }).message ?? undefined)
           : undefined
-      setDigestState({ status: 'ready', digest, message })
+      setDigestState({ status: 'ready', digest, sourceReports: selectedReports, message })
     } catch {
       const digest = generateFallbackDigest(selectedReports)
       setDigestState({
         status: 'ready',
         digest,
+        sourceReports: selectedReports,
         message: 'AI unavailable. A rule-based digest was generated instead.',
       })
     }
@@ -412,7 +413,7 @@ export function DigestPage() {
                   Inspect the underlying reports to understand what the digest is based on.
                 </div>
                 <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  {selectedReports.map((report) => (
+                  {digestState.sourceReports.map((report) => (
                     <SourceReportCard key={report.id} report={report} />
                   ))}
                 </div>

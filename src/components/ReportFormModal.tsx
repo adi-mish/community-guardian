@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import {
   NEIGHBORHOODS,
   REPORT_CATEGORIES,
@@ -12,7 +12,6 @@ import {
 type Mode = 'create' | 'edit'
 
 type Props = {
-  open: boolean
   mode: Mode
   initial?: Report | null
   onClose: () => void
@@ -60,22 +59,10 @@ function collectFieldErrors(
   return errors
 }
 
-export function ReportFormModal({ open, mode, initial, onClose, onSave }: Props) {
-  const initialValues = useMemo(() => {
-    if (mode === 'edit' && initial) return toFormValues(initial)
-    return emptyFormValues()
-  }, [initial, mode])
-
-  const [values, setValues] = useState<ReportFormValues>(initialValues)
-  const [errors, setErrors] = useState<FieldErrors>({})
-
-  useEffect(() => {
-    if (!open) return
-    setValues(initialValues)
-    setErrors({})
-  }, [open, initialValues])
-
-  if (!open) return null
+export function ReportFormModal({ mode, initial, onClose, onSave }: Props) {
+  const initialValues = mode === 'edit' && initial ? toFormValues(initial) : emptyFormValues()
+  const [values, setValues] = useState<ReportFormValues>(() => initialValues)
+  const [errors, setErrors] = useState<FieldErrors>(() => ({}))
 
   const title = mode === 'create' ? 'Create report' : 'Edit report'
 

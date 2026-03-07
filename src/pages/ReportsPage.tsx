@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ReportDetail } from '../components/ReportDetail'
 import { ReportFormModal } from '../components/ReportFormModal'
 import { DEFAULT_REPORT_FILTERS, filterReports, sortReportsNewestFirst, type ReportFilters } from '../lib/filters'
@@ -54,7 +54,7 @@ function ListItem({ report, active, onSelect }: { report: Report; active: boolea
 export function ReportsPage() {
   const { reports, createReport, updateReport, setVerificationStatus } = useReportsStore()
   const [filters, setFilters] = useState<ReportFilters>(DEFAULT_REPORT_FILTERS)
-  const [selectedId, setSelectedId] = useState<string | null>(reports[0]?.id ?? null)
+  const [selectedId, setSelectedId] = useState<string | null>(null)
   const [modal, setModal] = useState<{ mode: 'create' | 'edit'; initial?: Report | null } | null>(null)
 
   const visibleReports = useMemo(() => {
@@ -62,15 +62,13 @@ export function ReportsPage() {
     return sortReportsNewestFirst(filtered)
   }, [filters, reports])
 
-  const selected = useMemo(
-    () => reports.find((report) => report.id === selectedId) ?? null,
-    [reports, selectedId],
-  )
-
-  useEffect(() => {
-    if (!selectedId && visibleReports[0]) setSelectedId(visibleReports[0].id)
-    if (selectedId && !reports.some((r) => r.id === selectedId)) setSelectedId(visibleReports[0]?.id ?? null)
-  }, [reports, selectedId, visibleReports])
+  const selected = useMemo(() => {
+    if (selectedId) {
+      const match = visibleReports.find((report) => report.id === selectedId)
+      if (match) return match
+    }
+    return visibleReports[0] ?? null
+  }, [selectedId, visibleReports])
 
   return (
     <div className="cg-page">
@@ -190,7 +188,7 @@ export function ReportsPage() {
                 <ListItem
                   key={report.id}
                   report={report}
-                  active={report.id === selectedId}
+                  active={report.id === selected?.id}
                   onSelect={() => setSelectedId(report.id)}
                 />
               ))}
@@ -217,22 +215,24 @@ export function ReportsPage() {
         )}
       </div>
 
-      <ReportFormModal
-        open={modal !== null}
-        mode={modal?.mode ?? 'create'}
-        initial={modal?.initial ?? null}
-        onClose={() => setModal(null)}
-        onSave={(values) => {
-          if (modal?.mode === 'edit' && modal.initial) {
-            updateReport(modal.initial.id, values)
-            setSelectedId(modal.initial.id)
-          } else {
-            const created = createReport(values)
-            setSelectedId(created.id)
-          }
-          setModal(null)
-        }}
-      />
+      {modal ? (
+        <ReportFormModal
+          key={`${modal.mode}_${modal.initial?.id ?? 'new'}`}
+          mode={modal.mode}
+          initial={modal.initial ?? null}
+          onClose={() => setModal(null)}
+          onSave={(values) => {
+            if (modal.mode === 'edit' && modal.initial) {
+              updateReport(modal.initial.id, values)
+              setSelectedId(modal.initial.id)
+            } else {
+              const created = createReport(values)
+              setSelectedId(created.id)
+            }
+            setModal(null)
+          }}
+        />
+      ) : null}
     </div>
   )
 }
