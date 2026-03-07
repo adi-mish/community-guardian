@@ -7,6 +7,7 @@ export const ReportCategorySchema = z.enum([
 ])
 
 export type ReportCategory = z.infer<typeof ReportCategorySchema>
+export const REPORT_CATEGORIES = ReportCategorySchema.options
 
 export const NeighborhoodSchema = z.enum([
   'Downtown',
@@ -20,12 +21,15 @@ export const NeighborhoodSchema = z.enum([
 ])
 
 export type Neighborhood = z.infer<typeof NeighborhoodSchema>
+export const NEIGHBORHOODS = NeighborhoodSchema.options
 
 export const SeveritySchema = z.enum(['low', 'medium', 'high'])
 export type Severity = z.infer<typeof SeveritySchema>
+export const SEVERITIES = SeveritySchema.options
 
 export const VerificationStatusSchema = z.enum(['unverified', 'verified', 'resolved'])
 export type VerificationStatus = z.infer<typeof VerificationStatusSchema>
+export const VERIFICATION_STATUSES = VerificationStatusSchema.options
 
 export const SummaryModeSchema = z.enum(['ai', 'fallback'])
 export type SummaryMode = z.infer<typeof SummaryModeSchema>
@@ -117,4 +121,3 @@ export function parseTags(tagsText: string): string[] {
   const unique = Array.from(new Set(tags.map((tag) => tag.toLowerCase())))
   return unique.slice(0, 12)
 }
-

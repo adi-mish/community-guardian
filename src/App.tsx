@@ -1,34 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
+import { ReportsPage } from './pages/ReportsPage'
+import { DigestPage } from './pages/DigestPage'
+import { SettingsPage } from './pages/SettingsPage'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="cg-shell">
+      <header className="cg-header">
+        <div className="cg-brand">
+          <div className="cg-brand-title">Community Guardian</div>
+          <div className="cg-brand-subtitle">Calm, actionable safety digests from local reports.</div>
+        </div>
+      </header>
+
+      <div className="cg-body">
+        <nav className="cg-nav" aria-label="Primary">
+          <NavLink to="/reports" className={({ isActive }) => `cg-nav-link ${isActive ? 'is-active' : ''}`}>
+            Reports
+          </NavLink>
+          <NavLink to="/digest" className={({ isActive }) => `cg-nav-link ${isActive ? 'is-active' : ''}`}>
+            Digest generator
+          </NavLink>
+          <NavLink to="/settings" className={({ isActive }) => `cg-nav-link ${isActive ? 'is-active' : ''}`}>
+            Settings / info
+          </NavLink>
+        </nav>
+
+        <main className="cg-main">
+          <Routes>
+            <Route path="/" element={<Navigate to="/reports" replace />} />
+            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/digest" element={<DigestPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="*" element={<Navigate to="/reports" replace />} />
+          </Routes>
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
