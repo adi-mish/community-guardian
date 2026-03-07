@@ -33,6 +33,11 @@
   color: var(--muted);
 }
 
+.cg-brand-status {
+  margin-top: 6px;
+  font-size: 12px;
+}
+
 .cg-body {
   flex: 1;
   width: 100%;

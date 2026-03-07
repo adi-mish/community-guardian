@@ -1,5 +1,6 @@
 import './App.css'
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
+import { ServerStatusLine } from './components/ServerStatusLine'
 import { ReportsPage } from './pages/ReportsPage'
 import { DigestPage } from './pages/DigestPage'
 import { SettingsPage } from './pages/SettingsPage'
@@ -11,6 +12,7 @@ function App() {
         <div className="cg-brand">
           <div className="cg-brand-title">Community Guardian</div>
           <div className="cg-brand-subtitle">Calm, actionable safety digests from local reports.</div>
+          <ServerStatusLine />
         </div>
       </header>
 

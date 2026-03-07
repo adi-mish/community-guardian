@@ -145,6 +145,18 @@ export const AiDigestOutputSchema = z
 
 export type AiDigestOutput = z.infer<typeof AiDigestOutputSchema>
 
+export const HealthResponseSchema = z
+  .object({
+    ok: z.boolean(),
+    ai_available: z.boolean(),
+    model: z.string().nullable(),
+    total_reports: z.number().int().nonnegative(),
+    last_digest_mode: SummaryModeSchema.nullable(),
+  })
+  .strict()
+
+export type HealthResponse = z.infer<typeof HealthResponseSchema>
+
 export function parseTags(tagsText: string): string[] {
   const tags = tagsText
     .split(',')
