@@ -8,6 +8,7 @@ import {
   type Report,
   type ReportFormValues,
 } from '../lib/validation'
+import { verificationStatusLabel } from '../lib/presentation'
 
 type Mode = 'create' | 'edit'
 
@@ -193,7 +194,7 @@ export function ReportFormModal({ mode, initial, onClose, onSave }: Props) {
               >
                 {VERIFICATION_STATUSES.map((s) => (
                   <option key={s} value={s}>
-                    {s}
+                    {verificationStatusLabel(s)}
                   </option>
                 ))}
               </select>

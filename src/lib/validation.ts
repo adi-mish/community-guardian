@@ -27,7 +27,12 @@ export const SeveritySchema = z.enum(['low', 'medium', 'high'])
 export type Severity = z.infer<typeof SeveritySchema>
 export const SEVERITIES = SeveritySchema.options
 
-export const VerificationStatusSchema = z.enum(['unverified', 'verified', 'resolved'])
+export const VerificationStatusSchema = z.enum([
+  'unverified',
+  'community-verified',
+  'trusted-source',
+  'resolved',
+])
 export type VerificationStatus = z.infer<typeof VerificationStatusSchema>
 export const VERIFICATION_STATUSES = VerificationStatusSchema.options
 
@@ -39,59 +44,65 @@ const IsoDateTimeSchema = z
   .datetime()
   .refine((value) => !Number.isNaN(Date.parse(value)), { message: 'Invalid timestamp.' })
 
-export const ReportSchema = z.object({
-  id: z.string().min(1),
-  title: z.string().trim().min(1, 'Title is required.').max(120),
-  raw_description: z
-    .string()
-    .trim()
-    .min(1, 'Description is required.')
-    .max(4000),
-  category: ReportCategorySchema,
-  neighborhood: NeighborhoodSchema,
-  severity: SeveritySchema,
-  verification_status: VerificationStatusSchema,
-  created_at: IsoDateTimeSchema,
-  source_label: z.string().trim().min(1).max(80),
-  tags: z.array(z.string().trim().min(1)).max(12),
-  recommended_checklist: z.array(z.string().trim().min(1)).min(1).max(8),
-  ai_summary: z.string().trim().min(1).max(600),
-  summary_mode: SummaryModeSchema,
-})
+export const ReportSchema = z
+  .object({
+    id: z.string().min(1),
+    title: z.string().trim().min(1, 'Title is required.').max(120),
+    raw_description: z
+      .string()
+      .trim()
+      .min(1, 'Description is required.')
+      .max(4000),
+    category: ReportCategorySchema,
+    neighborhood: NeighborhoodSchema,
+    severity: SeveritySchema,
+    verification_status: VerificationStatusSchema,
+    created_at: IsoDateTimeSchema,
+    source_label: z.string().trim().min(1).max(80),
+    tags: z.array(z.string().trim().min(1)).max(12),
+    recommended_checklist: z.array(z.string().trim().min(1)).min(1).max(8),
+    ai_summary: z.string().trim().min(1).max(600),
+    summary_mode: SummaryModeSchema,
+  })
+  .strict()
 
 export type Report = z.infer<typeof ReportSchema>
 
-export const ReportFormSchema = z.object({
-  title: z.string().trim().min(1, 'Title is required.').max(120),
-  raw_description: z
-    .string()
-    .trim()
-    .min(1, 'Description is required.')
-    .max(4000),
-  category: ReportCategorySchema,
-  neighborhood: NeighborhoodSchema,
-  severity: SeveritySchema,
-  verification_status: VerificationStatusSchema,
-  source_label: z.string().trim().min(1, 'Source label is required.').max(80),
-  tags_text: z.string().trim().max(200).optional().default(''),
-})
+export const ReportFormSchema = z
+  .object({
+    title: z.string().trim().min(1, 'Title is required.').max(120),
+    raw_description: z
+      .string()
+      .trim()
+      .min(1, 'Description is required.')
+      .max(4000),
+    category: ReportCategorySchema,
+    neighborhood: NeighborhoodSchema,
+    severity: SeveritySchema,
+    verification_status: VerificationStatusSchema,
+    source_label: z.string().trim().min(1, 'Source label is required.').max(80),
+    tags_text: z.string().trim().max(200).optional().default(''),
+  })
+  .strict()
 
 export type ReportFormValues = z.infer<typeof ReportFormSchema>
 
 export const DigestConfidenceSchema = z.enum(['Low', 'Medium', 'High'])
 export type DigestConfidence = z.infer<typeof DigestConfidenceSchema>
 
-export const DigestSchema = z.object({
-  selected_report_ids: z.array(z.string().min(1)).min(1),
-  digest_title: z.string().trim().min(1).max(120),
-  digest_summary: z.string().trim().min(1).max(1200),
-  key_risks: z.array(z.string().trim().min(1)).min(1).max(8),
-  action_checklist: z.array(z.string().trim().min(1)).length(3),
-  confidence_label: DigestConfidenceSchema,
-  generated_at: IsoDateTimeSchema,
-  mode: SummaryModeSchema,
-  notes: z.string().trim().min(1).max(1200),
-})
+export const DigestSchema = z
+  .object({
+    selected_report_ids: z.array(z.string().min(1)).min(1),
+    digest_title: z.string().trim().min(1).max(120),
+    digest_summary: z.string().trim().min(1).max(1200),
+    key_risks: z.array(z.string().trim().min(1)).min(1).max(8),
+    action_checklist: z.array(z.string().trim().min(1)).length(3),
+    confidence_label: DigestConfidenceSchema,
+    generated_at: IsoDateTimeSchema,
+    mode: SummaryModeSchema,
+    notes: z.string().trim().min(1).max(1200),
+  })
+  .strict()
 
 export type Digest = z.infer<typeof DigestSchema>
 
@@ -121,14 +132,16 @@ export const DigestResponseSchema = z
 
 export type DigestResponse = z.infer<typeof DigestResponseSchema>
 
-export const AiDigestOutputSchema = z.object({
-  digest_title: z.string().trim().min(1).max(120),
-  digest_summary: z.string().trim().min(1).max(1200),
-  key_risks: z.array(z.string().trim().min(1)).min(1).max(8),
-  action_checklist: z.array(z.string().trim().min(1)).length(3),
-  confidence_label: DigestConfidenceSchema,
-  notes: z.string().trim().min(1).max(1200),
-})
+export const AiDigestOutputSchema = z
+  .object({
+    digest_title: z.string().trim().min(1).max(120),
+    digest_summary: z.string().trim().min(1).max(1200),
+    key_risks: z.array(z.string().trim().min(1)).min(1).max(8),
+    action_checklist: z.array(z.string().trim().min(1)).length(3),
+    confidence_label: DigestConfidenceSchema,
+    notes: z.string().trim().min(1).max(1200),
+  })
+  .strict()
 
 export type AiDigestOutput = z.infer<typeof AiDigestOutputSchema>
 

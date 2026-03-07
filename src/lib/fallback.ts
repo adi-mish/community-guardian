@@ -116,10 +116,14 @@ function topCategories(reports: Report[]): ReportCategory[] {
 }
 
 function confidenceLabel(reports: Report[]): Digest['confidence_label'] {
-  if (reports.length <= 1) return reports[0]?.verification_status === 'verified' ? 'Medium' : 'Low'
-  const confirmed = reports.filter((r) => r.verification_status !== 'unverified').length
-  if (confirmed === 0) return 'Low'
-  if (confirmed / reports.length >= 0.6) return 'High'
+  if (reports.length <= 1) {
+    const status = reports[0]?.verification_status
+    return status && status !== 'unverified' ? 'Medium' : 'Low'
+  }
+
+  const grounded = reports.filter((r) => r.verification_status !== 'unverified').length
+  if (grounded === 0) return 'Low'
+  if (grounded / reports.length >= 0.6) return 'High'
   return 'Medium'
 }
 
@@ -185,13 +189,14 @@ export function generateFallbackDigest(reports: Report[]): Digest {
     .slice(0, 5)
 
   const selected_report_ids = reports.map((r) => r.id)
-  const verifiedCount = reports.filter((r) => r.verification_status === 'verified').length
+  const communityVerifiedCount = reports.filter((r) => r.verification_status === 'community-verified').length
+  const trustedSourceCount = reports.filter((r) => r.verification_status === 'trusted-source').length
   const resolvedCount = reports.filter((r) => r.verification_status === 'resolved').length
 
   const statusClause =
-    verifiedCount + resolvedCount === 0
+    communityVerifiedCount + trustedSourceCount + resolvedCount === 0
       ? 'Most items are unverified signals; treat them as prompts for routine caution, not confirmed facts.'
-      : `${verifiedCount} verified and ${resolvedCount} resolved items provide some grounding; still verify details before acting.`
+      : `${communityVerifiedCount} community-verified, ${trustedSourceCount} trusted-source, and ${resolvedCount} resolved items provide some grounding; still verify details before acting.`
 
   const digest = {
     selected_report_ids,
@@ -203,7 +208,7 @@ export function generateFallbackDigest(reports: Report[]): Digest {
     generated_at: new Date().toISOString(),
     mode: 'fallback',
     notes:
-      'This is an informational summary based on selected reports. For emergencies, contact local emergency services. For unverified reports, prioritize low-regret actions (password hygiene, locking up, and verifying via trusted channels).',
+      'This digest is informational and may include unverified reports. Verification reflects the source report state, not model certainty. For emergencies, contact local emergency services. For unverified reports, prioritize low-regret actions (password hygiene, locking up, and verifying via trusted channels).',
   } satisfies Digest
 
   return DigestSchema.parse(digest)

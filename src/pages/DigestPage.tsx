@@ -3,6 +3,7 @@ import { Badge } from '../components/Badge'
 import { DEFAULT_REPORT_FILTERS, filterReports, sortReportsNewestFirst, type ReportFilters } from '../lib/filters'
 import { formatDateTime } from '../lib/format'
 import { generateFallbackDigest } from '../lib/fallback'
+import { severityTone, verificationStatusLabel, verificationStatusTone } from '../lib/presentation'
 import { useReportsStore } from '../lib/reportsContext'
 import {
   DigestSchema,
@@ -35,18 +36,6 @@ function confidenceTone(label: Digest['confidence_label']) {
   return 'neutral'
 }
 
-function severityTone(severity: Severity) {
-  if (severity === 'high') return 'danger'
-  if (severity === 'medium') return 'warning'
-  return 'success'
-}
-
-function statusTone(status: VerificationStatus) {
-  if (status === 'verified') return 'success'
-  if (status === 'resolved') return 'info'
-  return 'neutral'
-}
-
 function SourceReportCard({ report }: { report: Report }) {
   return (
     <div className="cg-panel" style={{ padding: 12 }}>
@@ -54,7 +43,9 @@ function SourceReportCard({ report }: { report: Report }) {
         <div style={{ fontWeight: 700, lineHeight: 1.25 }}>{report.title}</div>
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
           <Badge tone={severityTone(report.severity)}>{report.severity}</Badge>
-          <Badge tone={statusTone(report.verification_status)}>{report.verification_status}</Badge>
+          <Badge tone={verificationStatusTone(report.verification_status)}>
+            {verificationStatusLabel(report.verification_status)}
+          </Badge>
         </div>
       </div>
       <div className="cg-list-item-meta" style={{ marginTop: 6 }}>
@@ -103,10 +94,16 @@ export function DigestPage() {
     return sortReportsNewestFirst(filtered)
   }, [filters, reports])
 
-  const selectedReports = useMemo(() => {
-    if (!selectedIds.size) return []
-    return reports.filter((r) => selectedIds.has(r.id))
+  const effectiveSelectedIds = useMemo(() => {
+    if (!selectedIds.size) return selectedIds
+    const existing = new Set(reports.map((r) => r.id))
+    return new Set([...selectedIds].filter((id) => existing.has(id)))
   }, [reports, selectedIds])
+
+  const selectedReports = useMemo(() => {
+    if (!effectiveSelectedIds.size) return []
+    return reports.filter((r) => effectiveSelectedIds.has(r.id))
+  }, [effectiveSelectedIds, reports])
 
   useEffect(() => {
     try {
@@ -115,11 +112,6 @@ export function DigestPage() {
       // ignore
     }
   }, [forceFallback])
-
-  useEffect(() => {
-    // Keep selection stable if reports change
-    setSelectedIds((prev) => new Set([...prev].filter((id) => reports.some((r) => r.id === id))))
-  }, [reports])
 
   async function generateDigest() {
     if (selectedReports.length === 0) {
@@ -255,7 +247,7 @@ export function DigestPage() {
               <option value="all">All</option>
               {VERIFICATION_STATUSES.map((s) => (
                 <option key={s} value={s}>
-                  {s}
+                  {verificationStatusLabel(s)}
                 </option>
               ))}
             </select>
@@ -283,7 +275,7 @@ export function DigestPage() {
             Select visible
           </button>
           <button className="cg-btn cg-btn-primary" type="button" onClick={generateDigest} disabled={digestState.status === 'loading'}>
-            {digestState.status === 'loading' ? 'Generating…' : `Generate digest (${selectedIds.size})`}
+            {digestState.status === 'loading' ? 'Generating…' : `Generate digest (${effectiveSelectedIds.size})`}
           </button>
         </div>
       </div>
@@ -309,7 +301,9 @@ export function DigestPage() {
                       <div className="cg-list-item-title">{report.title}</div>
                       <div className="cg-list-item-badges">
                         <Badge tone={severityTone(report.severity)}>{report.severity}</Badge>
-                        <Badge tone={statusTone(report.verification_status)}>{report.verification_status}</Badge>
+                        <Badge tone={verificationStatusTone(report.verification_status)}>
+                          {verificationStatusLabel(report.verification_status)}
+                        </Badge>
                       </div>
                     </div>
                     <div className="cg-list-item-meta">

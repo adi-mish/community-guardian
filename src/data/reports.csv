@@ -1,11 +1,11 @@
 id,title,category,neighborhood,severity,verification_status,created_at,source_label,tags
-rpt_001,Bank "fraud" call asking for verification code,Scam / phishing,Downtown,high,verified,2026-03-06T23:12:00.000Z,Resident tip (synthetic),bank;otp;urgent;account
+rpt_001,Bank "fraud" call asking for verification code,Scam / phishing,Downtown,high,community-verified,2026-03-06T23:12:00.000Z,Resident tip (synthetic),bank;otp;urgent;account
 rpt_002,Package delivery text with tracking link,Scam / phishing,Maplewood,medium,unverified,2026-03-05T18:40:00.000Z,Community inbox (synthetic),sms;delivery;link;urgent
 rpt_003,Job offer over messaging app requesting gift cards,Scam / phishing,Northgate,high,unverified,2026-03-06T14:05:00.000Z,Resident tip (synthetic),job;gift-card;identity;no-video
 rpt_004,Email about overdue utility bill with attachment,Scam / phishing,Riverside,medium,resolved,2026-03-04T16:22:00.000Z,Local bulletin (synthetic),email;invoice;attachment;utility
-rpt_009,Car break-ins reported near trail parking lot,Local physical safety,Lakeside,high,verified,2026-03-06T03:05:00.000Z,Neighborhood watch (synthetic),break-in;vehicles;parking
+rpt_009,Car break-ins reported near trail parking lot,Local physical safety,Lakeside,high,community-verified,2026-03-06T03:05:00.000Z,Neighborhood watch (synthetic),break-in;vehicles;parking
 rpt_011,Door-to-door "utilities" impersonation attempt,Local physical safety,Oak Hill,high,unverified,2026-03-06T19:50:00.000Z,Resident tip (synthetic),impersonation;door-to-door;utilities
-rpt_012,Streetlight outage reported on Maplewood block,Local physical safety,Maplewood,low,verified,2026-03-04T23:10:00.000Z,City service request (synthetic),streetlight;outage;visibility
-rpt_017,Router admin password still set to default,Home / network security,Maplewood,high,verified,2026-03-06T15:35:00.000Z,IT volunteer (synthetic),router;default-password;wifi
+rpt_012,Streetlight outage reported on Maplewood block,Local physical safety,Maplewood,low,trusted-source,2026-03-04T23:10:00.000Z,City service request (synthetic),streetlight;outage;visibility
+rpt_017,Router admin password still set to default,Home / network security,Maplewood,high,community-verified,2026-03-06T15:35:00.000Z,IT volunteer (synthetic),router;default-password;wifi
 rpt_018,Unknown device connected to home Wi‑Fi,Home / network security,Riverside,high,unverified,2026-03-05T06:45:00.000Z,Resident tip (synthetic),wifi;unknown-device;router
-rpt_023,Two-factor prompts arriving unexpectedly,Home / network security,Eastwood,high,verified,2026-03-07T01:05:00.000Z,Resident tip (synthetic),mfa;push;account-compromise
+rpt_023,Two-factor prompts arriving unexpectedly,Home / network security,Eastwood,high,community-verified,2026-03-07T01:05:00.000Z,Resident tip (synthetic),mfa;push;account-compromise

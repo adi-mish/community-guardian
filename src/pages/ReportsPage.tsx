@@ -3,6 +3,7 @@ import { ReportDetail } from '../components/ReportDetail'
 import { ReportFormModal } from '../components/ReportFormModal'
 import { DEFAULT_REPORT_FILTERS, filterReports, sortReportsNewestFirst, type ReportFilters } from '../lib/filters'
 import { formatDateTime } from '../lib/format'
+import { severityTone, verificationStatusLabel, verificationStatusTone } from '../lib/presentation'
 import { useReportsStore } from '../lib/reportsContext'
 import {
   NEIGHBORHOODS,
@@ -17,18 +18,6 @@ import {
 } from '../lib/validation'
 import { Badge } from '../components/Badge'
 
-function severityTone(severity: Severity) {
-  if (severity === 'high') return 'danger'
-  if (severity === 'medium') return 'warning'
-  return 'success'
-}
-
-function statusTone(status: VerificationStatus) {
-  if (status === 'verified') return 'success'
-  if (status === 'resolved') return 'info'
-  return 'neutral'
-}
-
 function ListItem({ report, active, onSelect }: { report: Report; active: boolean; onSelect: () => void }) {
   return (
     <button className={`cg-list-item ${active ? 'is-active' : ''}`} type="button" onClick={onSelect}>
@@ -36,7 +25,9 @@ function ListItem({ report, active, onSelect }: { report: Report; active: boolea
         <div className="cg-list-item-title">{report.title}</div>
         <div className="cg-list-item-badges">
           <Badge tone={severityTone(report.severity)}>{report.severity}</Badge>
-          <Badge tone={statusTone(report.verification_status)}>{report.verification_status}</Badge>
+          <Badge tone={verificationStatusTone(report.verification_status)}>
+            {verificationStatusLabel(report.verification_status)}
+          </Badge>
         </div>
       </div>
       <div className="cg-list-item-meta">
@@ -153,7 +144,7 @@ export function ReportsPage() {
               <option value="all">All</option>
               {VERIFICATION_STATUSES.map((s) => (
                 <option key={s} value={s}>
-                  {s}
+                  {verificationStatusLabel(s)}
                 </option>
               ))}
             </select>

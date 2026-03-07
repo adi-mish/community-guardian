@@ -1,18 +1,8 @@
 import type { Report, VerificationStatus } from '../lib/validation'
+import { VERIFICATION_STATUSES } from '../lib/validation'
 import { formatDateTime } from '../lib/format'
+import { severityTone, verificationStatusLabel, verificationStatusTone } from '../lib/presentation'
 import { Badge } from './Badge'
-
-function severityTone(severity: Report['severity']) {
-  if (severity === 'high') return 'danger'
-  if (severity === 'medium') return 'warning'
-  return 'success'
-}
-
-function statusTone(status: VerificationStatus) {
-  if (status === 'verified') return 'success'
-  if (status === 'resolved') return 'info'
-  return 'neutral'
-}
 
 export function ReportDetail({
   report,
@@ -31,26 +21,26 @@ export function ReportDetail({
           <button className="cg-btn cg-btn-ghost" type="button" onClick={onEdit}>
             Edit
           </button>
-          <button
-            className="cg-btn cg-btn-ghost"
-            type="button"
-            onClick={() => onSetStatus('verified')}
+          <select
+            className="cg-select"
+            aria-label="Verification status"
+            value={report.verification_status}
+            onChange={(e) => onSetStatus(e.target.value as VerificationStatus)}
           >
-            Mark verified
-          </button>
-          <button
-            className="cg-btn cg-btn-ghost"
-            type="button"
-            onClick={() => onSetStatus('resolved')}
-          >
-            Mark resolved
-          </button>
+            {VERIFICATION_STATUSES.map((status) => (
+              <option key={status} value={status}>
+                {verificationStatusLabel(status)}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
       <div className="cg-meta">
         <Badge tone={severityTone(report.severity)}>{report.severity}</Badge>
-        <Badge tone={statusTone(report.verification_status)}>{report.verification_status}</Badge>
+        <Badge tone={verificationStatusTone(report.verification_status)}>
+          {verificationStatusLabel(report.verification_status)}
+        </Badge>
         <span className="cg-meta-item">{report.category}</span>
         <span className="cg-meta-item">{report.neighborhood}</span>
       </div>
