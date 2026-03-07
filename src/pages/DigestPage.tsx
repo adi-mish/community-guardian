@@ -119,6 +119,17 @@ export function DigestPage() {
       return
     }
 
+    if (forceFallback) {
+      const digest = generateFallbackDigest(selectedReports)
+      setDigestState({
+        status: 'ready',
+        digest,
+        sourceReports: selectedReports,
+        message: 'AI disabled. Generated a rule-based digest instead.',
+      })
+      return
+    }
+
     setDigestState({ status: 'loading' })
 
     try {
@@ -136,14 +147,21 @@ export function DigestPage() {
       const resp = await fetch('/api/digest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ report_ids: selectedReports.map((r) => r.id), force_fallback: forceFallback }),
+        body: JSON.stringify({ report_ids: selectedReports.map((r) => r.id) }),
       })
 
       if (!resp.ok) {
-        const text = await resp.text()
-        const message = text.includes('could not be found')
-          ? 'One or more selected reports could not be found. Generated a local rule-based digest instead.'
-          : `Request failed (${resp.status}). Generated a local rule-based digest instead.`
+        const raw = await resp.text()
+        let serverError: string | null = null
+        try {
+          const obj = JSON.parse(raw) as { error?: unknown }
+          if (typeof obj.error === 'string') serverError = obj.error
+        } catch {
+          // ignore non-JSON errors
+        }
+
+        const prefix = serverError ?? `Request failed (${resp.status}).`
+        const message = `${prefix} Generated a rule-based digest instead.`
         const digest = generateFallbackDigest(selectedReports)
         setDigestState({ status: 'ready', digest, sourceReports: selectedReports, message })
         return
@@ -159,7 +177,7 @@ export function DigestPage() {
         status: 'ready',
         digest,
         sourceReports: selectedReports,
-        message: 'AI unavailable. A rule-based digest was generated instead.',
+        message: 'AI unavailable. Generated a rule-based digest instead.',
       })
     }
   }
@@ -261,7 +279,7 @@ export function DigestPage() {
               checked={forceFallback}
               onChange={(e) => setForceFallback(e.target.checked)}
             />
-            Force fallback
+            Force in-browser fallback
           </label>
 
           <button className="cg-btn cg-btn-ghost" type="button" onClick={() => setSelectedIds(new Set())}>
@@ -379,7 +397,7 @@ export function DigestPage() {
                     {digestState.digest.mode === 'ai' ? 'AI-generated' : 'Fallback-generated'}
                   </Badge>
                   <Badge tone={confidenceTone(digestState.digest.confidence_label)}>
-                    Confidence: {digestState.digest.confidence_label}
+                    Digest confidence: {digestState.digest.confidence_label}
                   </Badge>
                   <span className="cg-meta-item">Generated: {formatDateTime(digestState.digest.generated_at)}</span>
                 </div>

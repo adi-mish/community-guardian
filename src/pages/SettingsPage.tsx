@@ -11,9 +11,10 @@ export function SettingsPage() {
           <ul className="cg-checklist">
             <li>All built-in reports are synthetic and stored locally in your browser.</li>
             <li>
-              When AI is enabled and configured, only the selected reports are sent to the local server for digest
-              generation.
+              When generating a digest, selected reports may be sent to the local server. If AI is unavailable or
+              returns an unexpected response, the app falls back to deterministic rules.
             </li>
+            <li>When “Force in-browser fallback” is enabled, digests are generated in your browser.</li>
             <li>AI output is parsed as strict JSON and validated; malformed output triggers deterministic fallback.</li>
             <li>Digests are informational only, not emergency, medical, or legal advice.</li>
             <li>Use general neighborhood names; avoid exact addresses or personal data.</li>
