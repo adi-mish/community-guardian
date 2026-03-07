@@ -1,0 +1,459 @@
+[
+  {
+    "id": "rpt_001",
+    "title": "Bank \"fraud\" call asking for verification code",
+    "raw_description": "A caller claimed to be from my bank's fraud team and said my account would be locked unless I \"verified\" a one-time code. They asked me to read the code back over the phone. I hung up and called the number on my card; the bank said they did not place the call.",
+    "category": "Scam / phishing",
+    "neighborhood": "Downtown",
+    "severity": "high",
+    "verification_status": "verified",
+    "created_at": "2026-03-06T23:12:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["bank", "otp", "urgent", "account"],
+    "recommended_checklist": [
+      "Do not share one-time codes with anyone.",
+      "Call back using a trusted number (card/app), not the inbound call.",
+      "Enable MFA and review recent logins and transactions."
+    ],
+    "ai_summary": "Impersonation phone call attempted to capture a one-time verification code; bank confirmed it was not legitimate.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_002",
+    "title": "Package delivery text with tracking link",
+    "raw_description": "Received a text saying a delivery could not be completed and asking me to confirm my address via a shortened link. The message used urgent language and threatened a return to sender.",
+    "category": "Scam / phishing",
+    "neighborhood": "Maplewood",
+    "severity": "medium",
+    "verification_status": "unverified",
+    "created_at": "2026-03-05T18:40:00.000Z",
+    "source_label": "Community inbox (synthetic)",
+    "tags": ["sms", "delivery", "link", "urgent"],
+    "recommended_checklist": [
+      "Avoid clicking shortened links in unexpected texts.",
+      "Check shipment status by typing the carrier site manually.",
+      "Report the message as spam and delete it."
+    ],
+    "ai_summary": "Likely SMS delivery scam using a shortened link to lure address/payment confirmation.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_003",
+    "title": "Job offer over messaging app requesting gift cards",
+    "raw_description": "A \"recruiter\" offered a remote job and then asked me to buy gift cards to \"verify\" my identity and send the codes. The pay rate was unusually high and the account would not do a video call.",
+    "category": "Scam / phishing",
+    "neighborhood": "Northgate",
+    "severity": "high",
+    "verification_status": "unverified",
+    "created_at": "2026-03-06T14:05:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["job", "gift-card", "identity", "no-video"],
+    "recommended_checklist": [
+      "Never pay or buy gift cards to secure a job offer.",
+      "Verify recruiters through official company channels.",
+      "Report the account on the messaging platform."
+    ],
+    "ai_summary": "Classic fake job scam: high pay, no verification, and a request for gift card codes.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_004",
+    "title": "Email about overdue utility bill with attachment",
+    "raw_description": "An email claimed my utility account was overdue and included a PDF attachment named \"invoice_important.pdf\". The sender address looked slightly off and the message pushed immediate payment.",
+    "category": "Scam / phishing",
+    "neighborhood": "Riverside",
+    "severity": "medium",
+    "verification_status": "resolved",
+    "created_at": "2026-03-04T16:22:00.000Z",
+    "source_label": "Local bulletin (synthetic)",
+    "tags": ["email", "invoice", "attachment", "utility"],
+    "recommended_checklist": [
+      "Do not open unexpected attachments from unknown senders.",
+      "Log into the utility portal directly to confirm billing.",
+      "Run an antivirus scan if the attachment was opened."
+    ],
+    "ai_summary": "Suspicious utility-bill email with an attachment; treated as phishing and removed.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_005",
+    "title": "Password reset email for account I don't use",
+    "raw_description": "Got a password reset email for a social media account I haven't used in years. The email looked legitimate, but I didn't request it. I did not click the button.",
+    "category": "Scam / phishing",
+    "neighborhood": "Eastwood",
+    "severity": "low",
+    "verification_status": "unverified",
+    "created_at": "2026-03-03T21:10:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["password", "reset", "account"],
+    "recommended_checklist": [
+      "Do not click reset links you didn't request.",
+      "Navigate to the service directly and change the password there.",
+      "Enable MFA and check account recovery settings."
+    ],
+    "ai_summary": "Unrequested password reset email could indicate account probing; avoid links and verify via the official site.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_006",
+    "title": "Fake \"school alert\" voicemail asking for callback",
+    "raw_description": "A voicemail claimed there was an urgent school closure and asked me to call back a number to confirm details. The message didn't name the school and used a generic recording.",
+    "category": "Scam / phishing",
+    "neighborhood": "Oak Hill",
+    "severity": "medium",
+    "verification_status": "unverified",
+    "created_at": "2026-03-06T09:55:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["voicemail", "callback", "urgent", "school"],
+    "recommended_checklist": [
+      "Do not call back unknown numbers from generic urgent messages.",
+      "Check official school communication channels directly.",
+      "Block the number and report the voicemail as spam."
+    ],
+    "ai_summary": "Likely robocall using an urgent \"school alert\" pretext to drive callbacks.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_007",
+    "title": "Community forum link claiming \"crime map\" update",
+    "raw_description": "A post in a neighborhood forum linked to an external site promising a \"real-time crime map\" and asked users to \"log in with email\" to view details. The site looked hastily made.",
+    "category": "Scam / phishing",
+    "neighborhood": "South Park",
+    "severity": "medium",
+    "verification_status": "unverified",
+    "created_at": "2026-03-05T13:15:00.000Z",
+    "source_label": "Neighborhood forum (synthetic)",
+    "tags": ["login", "forum", "link", "crime-map"],
+    "recommended_checklist": [
+      "Avoid logging into unknown sites linked from forum posts.",
+      "Use official city resources for public safety information.",
+      "Report suspicious posts to moderators."
+    ],
+    "ai_summary": "Suspicious external \"crime map\" link prompting logins; treat as potential credential-harvesting.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_008",
+    "title": "Unexpected \"account locked\" pop-up while browsing",
+    "raw_description": "While reading news on my phone, a full-screen pop-up claimed my device was infected and my account was locked, telling me to call a number. Closing the tab made it disappear.",
+    "category": "Scam / phishing",
+    "neighborhood": "Lakeside",
+    "severity": "low",
+    "verification_status": "resolved",
+    "created_at": "2026-03-04T11:30:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["pop-up", "call", "scareware"],
+    "recommended_checklist": [
+      "Do not call numbers shown in browser pop-ups.",
+      "Close the tab/app; clear browser data if it reappears.",
+      "Update the device and run a trusted security scan."
+    ],
+    "ai_summary": "Scareware pop-up attempted to push a phone call; safely dismissed and cleared.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_009",
+    "title": "Car break-ins reported near trail parking lot",
+    "raw_description": "Several cars in the trail parking lot had windows smashed overnight. No injuries reported. People mentioned valuables left visible in the back seat.",
+    "category": "Local physical safety",
+    "neighborhood": "Lakeside",
+    "severity": "high",
+    "verification_status": "verified",
+    "created_at": "2026-03-06T03:05:00.000Z",
+    "source_label": "Neighborhood watch (synthetic)",
+    "tags": ["break-in", "vehicles", "parking"],
+    "recommended_checklist": [
+      "Remove valuables and bags from sight before parking.",
+      "Park in well-lit areas when possible.",
+      "Report suspicious activity to local non-emergency services."
+    ],
+    "ai_summary": "Verified cluster of overnight vehicle break-ins at the Lakeside trail parking area.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_010",
+    "title": "Suspicious vehicle slowly circling residential block",
+    "raw_description": "A dark SUV drove slowly through the block multiple times in the afternoon and stopped briefly near driveways. No direct contact occurred, but it felt unusual.",
+    "category": "Local physical safety",
+    "neighborhood": "Riverside",
+    "severity": "medium",
+    "verification_status": "unverified",
+    "created_at": "2026-03-05T20:25:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["suspicious", "vehicle", "casing"],
+    "recommended_checklist": [
+      "Note distinguishing details (time, location, description).",
+      "Ensure doors/windows are locked and outdoor lights work.",
+      "Contact non-emergency services if the behavior repeats."
+    ],
+    "ai_summary": "Unverified report of a vehicle repeatedly circling the Riverside block; monitor and document patterns.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_011",
+    "title": "Door-to-door \"utilities\" impersonation attempt",
+    "raw_description": "Two people wearing generic safety vests claimed they needed to check inside the home due to a \"gas leak\" in the area. They could not provide identification or a service order number.",
+    "category": "Local physical safety",
+    "neighborhood": "Oak Hill",
+    "severity": "high",
+    "verification_status": "unverified",
+    "created_at": "2026-03-06T19:50:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["impersonation", "door-to-door", "utilities"],
+    "recommended_checklist": [
+      "Do not let unknown visitors inside without verified ID.",
+      "Call the utility company using a trusted number to confirm.",
+      "Report suspicious visitors to local non-emergency services."
+    ],
+    "ai_summary": "Unverified door-to-door impersonation pretexted as a utility safety check; visitors lacked proper ID.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_012",
+    "title": "Streetlight outage reported on Maplewood block",
+    "raw_description": "Several streetlights are out along the block, making the sidewalk and intersections much darker at night. No incidents reported yet, but visibility is poor.",
+    "category": "Local physical safety",
+    "neighborhood": "Maplewood",
+    "severity": "low",
+    "verification_status": "verified",
+    "created_at": "2026-03-04T23:10:00.000Z",
+    "source_label": "City service request (synthetic)",
+    "tags": ["streetlight", "outage", "visibility"],
+    "recommended_checklist": [
+      "Use well-lit routes when walking at night.",
+      "Consider temporary motion lighting at home entrances.",
+      "Submit/track a city repair request if not already filed."
+    ],
+    "ai_summary": "Verified streetlight outage affecting nighttime visibility in Maplewood; repair request logged.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_013",
+    "title": "Bike theft attempt near apartment racks",
+    "raw_description": "Someone was seen trying to cut a bike lock near the apartment racks around dusk. They left when approached. No theft confirmed.",
+    "category": "Local physical safety",
+    "neighborhood": "Downtown",
+    "severity": "medium",
+    "verification_status": "unverified",
+    "created_at": "2026-03-05T00:30:00.000Z",
+    "source_label": "Building notice (synthetic)",
+    "tags": ["bike", "theft", "lock"],
+    "recommended_checklist": [
+      "Use a hardened U-lock and secure both frame and wheel.",
+      "Avoid leaving bikes outside overnight when possible.",
+      "Report suspicious activity to property management."
+    ],
+    "ai_summary": "Unverified attempted bike-lock cutting near Downtown apartment racks; increase locking precautions.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_014",
+    "title": "Noisy near-duplicate: \"heard glass\" late night",
+    "raw_description": "Around 1am I heard what might have been glass breaking somewhere nearby, but I could not see anything from my window. Posting in case others heard it too.",
+    "category": "Local physical safety",
+    "neighborhood": "Lakeside",
+    "severity": "low",
+    "verification_status": "unverified",
+    "created_at": "2026-03-06T06:10:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["noise", "possible", "late-night"],
+    "recommended_checklist": [
+      "If you see an active incident, call local emergency services.",
+      "Share only general location details (no exact addresses).",
+      "Check in with neighbors if you feel safe doing so."
+    ],
+    "ai_summary": "Low-information report of a possible loud noise; included for pattern awareness but not confirmation.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_015",
+    "title": "Power outage followed by unknown door checks",
+    "raw_description": "During a brief power outage, someone walked down the street checking door handles. A neighbor saw them leave quickly when porch lights came back on.",
+    "category": "Local physical safety",
+    "neighborhood": "South Park",
+    "severity": "high",
+    "verification_status": "unverified",
+    "created_at": "2026-03-03T04:18:00.000Z",
+    "source_label": "Neighborhood watch (synthetic)",
+    "tags": ["power-outage", "door", "suspicious"],
+    "recommended_checklist": [
+      "Confirm exterior doors/windows are secured during outages.",
+      "Use battery lighting and consider motion lights.",
+      "Report suspicious behavior to non-emergency services."
+    ],
+    "ai_summary": "Unverified report: door-handle checking observed during a short power outage in South Park.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_016",
+    "title": "Loose dog reported near playground",
+    "raw_description": "A medium-sized dog without a leash was seen running near the playground after school. No bites reported, but a few kids were startled.",
+    "category": "Local physical safety",
+    "neighborhood": "Eastwood",
+    "severity": "medium",
+    "verification_status": "resolved",
+    "created_at": "2026-03-04T20:55:00.000Z",
+    "source_label": "Park staff (synthetic)",
+    "tags": ["animal", "playground", "after-school"],
+    "recommended_checklist": [
+      "Keep children close and avoid approaching unknown animals.",
+      "Contact animal control or park staff if the dog returns.",
+      "Share general location details to help reunite with owner."
+    ],
+    "ai_summary": "Loose dog near Eastwood playground was reported and later handled; continue to monitor for reoccurrence.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_017",
+    "title": "Router admin password still set to default",
+    "raw_description": "While helping a neighbor reset their Wi‑Fi, we noticed the router admin page was still using the default username/password printed on the device. The Wi‑Fi password was also shared widely.",
+    "category": "Home / network security",
+    "neighborhood": "Maplewood",
+    "severity": "high",
+    "verification_status": "verified",
+    "created_at": "2026-03-06T15:35:00.000Z",
+    "source_label": "IT volunteer (synthetic)",
+    "tags": ["router", "default-password", "wifi"],
+    "recommended_checklist": [
+      "Change the router admin password (not just Wi‑Fi).",
+      "Update firmware and enable automatic updates if available.",
+      "Use WPA2/WPA3 with a strong Wi‑Fi passphrase."
+    ],
+    "ai_summary": "Verified weak router setup: default admin credentials and broadly shared Wi‑Fi password increased compromise risk.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_018",
+    "title": "Unknown device connected to home Wi‑Fi",
+    "raw_description": "Router device list showed a new device name I did not recognize connected overnight. I changed the Wi‑Fi password and kicked devices, but I'm not sure how it got on.",
+    "category": "Home / network security",
+    "neighborhood": "Riverside",
+    "severity": "high",
+    "verification_status": "unverified",
+    "created_at": "2026-03-05T06:45:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["wifi", "unknown-device", "router"],
+    "recommended_checklist": [
+      "Change Wi‑Fi password and disconnect existing sessions.",
+      "Update router firmware and disable remote admin access.",
+      "Check for reused passwords on key accounts."
+    ],
+    "ai_summary": "Potential unauthorized Wi‑Fi access: unknown device observed; password changed but follow-up hardening advised.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_019",
+    "title": "Phishing email disguised as \"router firmware update\"",
+    "raw_description": "Email claimed my router needed an urgent firmware update and included a link to download a file. It referenced my ISP by name but came from a free email address.",
+    "category": "Home / network security",
+    "neighborhood": "Northgate",
+    "severity": "medium",
+    "verification_status": "unverified",
+    "created_at": "2026-03-05T14:12:00.000Z",
+    "source_label": "ISP bulletin (synthetic)",
+    "tags": ["firmware", "download", "isp", "phishing"],
+    "recommended_checklist": [
+      "Only update firmware via the router admin page or vendor site.",
+      "Do not download executables from email links.",
+      "If you clicked, run a malware scan and change key passwords."
+    ],
+    "ai_summary": "Suspicious firmware-update email likely intended to deliver malware; updates should be done through trusted channels.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_020",
+    "title": "Password reuse concern after \"haveibeenpwned\" alert",
+    "raw_description": "A friend told me my email appeared in a breach notification site. I have reused the same password on a few accounts. No sign of takeover yet.",
+    "category": "Home / network security",
+    "neighborhood": "Downtown",
+    "severity": "medium",
+    "verification_status": "unverified",
+    "created_at": "2026-03-04T04:35:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["breach", "password", "reuse", "mfa"],
+    "recommended_checklist": [
+      "Change passwords on your most important accounts first.",
+      "Use a password manager to create unique passwords.",
+      "Enable MFA on email, banking, and primary logins."
+    ],
+    "ai_summary": "Breach exposure plus password reuse increases risk; prioritize unique passwords and MFA even without confirmed takeover.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_021",
+    "title": "Smart doorbell repeatedly going offline",
+    "raw_description": "My smart doorbell has been disconnecting from Wi‑Fi at night for the last few days. It might be signal issues, but I'm worried it could be interference.",
+    "category": "Home / network security",
+    "neighborhood": "Oak Hill",
+    "severity": "low",
+    "verification_status": "unverified",
+    "created_at": "2026-03-06T02:20:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["iot", "doorbell", "offline"],
+    "recommended_checklist": [
+      "Update device firmware and reboot the router.",
+      "Check Wi‑Fi signal strength and change to a less congested channel.",
+      "Review router logs for repeated disconnects."
+    ],
+    "ai_summary": "Intermittent IoT disconnects may be benign; update firmware and check Wi‑Fi channel/signal before assuming interference.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_022",
+    "title": "Neighbor received \"tech support\" remote access request",
+    "raw_description": "A pop-up told my neighbor to call a number for \"Microsoft support\". The person on the phone asked to install remote-access software. They stopped before installing anything.",
+    "category": "Home / network security",
+    "neighborhood": "South Park",
+    "severity": "high",
+    "verification_status": "resolved",
+    "created_at": "2026-03-03T19:05:00.000Z",
+    "source_label": "IT volunteer (synthetic)",
+    "tags": ["tech-support", "remote-access", "scareware"],
+    "recommended_checklist": [
+      "Do not install remote-access tools at a stranger's request.",
+      "Close the browser and run a malware scan.",
+      "Consider updating the browser and enabling pop-up blocking."
+    ],
+    "ai_summary": "Resolved tech-support scam attempt: remote-access installation was requested but prevented.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_023",
+    "title": "Two-factor prompts arriving unexpectedly",
+    "raw_description": "I received multiple MFA push notifications overnight for an account I use daily. I denied them and changed my password this morning.",
+    "category": "Home / network security",
+    "neighborhood": "Eastwood",
+    "severity": "high",
+    "verification_status": "verified",
+    "created_at": "2026-03-07T01:05:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["mfa", "push", "account-compromise"],
+    "recommended_checklist": [
+      "Change the account password and revoke active sessions.",
+      "Review sign-in history and recovery options.",
+      "Prefer phishing-resistant MFA methods when available."
+    ],
+    "ai_summary": "Verified account-probing: repeated MFA push prompts were denied; password change and session review completed.",
+    "summary_mode": "fallback"
+  },
+  {
+    "id": "rpt_024",
+    "title": "Noisy near-duplicate: \"Wi‑Fi named like mine\"",
+    "raw_description": "I noticed a Wi‑Fi network name very similar to mine appear nearby (same name with \"_5G\" added). It could be normal, but I want to flag it.",
+    "category": "Home / network security",
+    "neighborhood": "Maplewood",
+    "severity": "low",
+    "verification_status": "unverified",
+    "created_at": "2026-03-04T08:50:00.000Z",
+    "source_label": "Resident tip (synthetic)",
+    "tags": ["wifi", "ssid", "lookalike"],
+    "recommended_checklist": [
+      "Confirm your router's SSID and Wi‑Fi password in the admin panel.",
+      "Use WPA2/WPA3 and disable WPS if possible.",
+      "Avoid connecting to lookalike networks; forget unknown networks."
+    ],
+    "ai_summary": "Possible lookalike Wi‑Fi SSID observed; verify your network settings and avoid connecting to unknown SSIDs.",
+    "summary_mode": "fallback"
+  }
+]
+
