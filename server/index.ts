@@ -1,8 +1,9 @@
 import 'dotenv/config'
 import express from 'express'
-import { DigestRequestSchema } from '../src/lib/validation.ts'
+import { DigestIdRequestSchema, ReportsSyncRequestSchema } from '../src/lib/validation.ts'
 import { buildDigest } from './digestService.ts'
 import { generateAiDigest } from './openaiDigest.ts'
+import { getReportsByIds, getStoreStats, upsertReports } from './reportStore.ts'
 
 const app = express()
 
@@ -12,24 +13,45 @@ app.use(express.json({ limit: '250kb' }))
 app.get('/api/health', (_req, res) => {
   const apiKey = process.env.OPENAI_API_KEY
   const model = process.env.OPENAI_MODEL ?? null
+  const { total_reports } = getStoreStats()
   res.setHeader('Cache-Control', 'no-store')
-  res.json({ ok: true, ai_available: Boolean(apiKey), model })
+  res.json({ ok: true, ai_available: Boolean(apiKey), model, total_reports })
+})
+
+app.post('/api/reports/sync', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store')
+  const parsed = ReportsSyncRequestSchema.safeParse(req.body)
+  if (!parsed.success) {
+    res.status(400).json({ error: 'Invalid report sync payload.' })
+    return
+  }
+
+  const result = upsertReports(parsed.data.reports)
+  res.json({ ok: true, ...result })
 })
 
 app.post('/api/digest', async (req, res) => {
   res.setHeader('Cache-Control', 'no-store')
 
-  const parsed = DigestRequestSchema.safeParse(req.body)
+  const parsed = DigestIdRequestSchema.safeParse(req.body)
   if (!parsed.success) {
     const message = parsed.error.issues[0]?.message ?? 'Invalid request.'
     res.status(400).json({ error: message })
     return
   }
 
-  const reports = parsed.data.reports
-  const forceFallback = Boolean((req.body as { force_fallback?: unknown }).force_fallback)
+  const reportIds = parsed.data.report_ids
+  const forceFallback = Boolean(parsed.data.force_fallback)
 
   const apiKey = process.env.OPENAI_API_KEY
+
+  const resolved = getReportsByIds(reportIds)
+  if (resolved.missing_ids.length) {
+    res.status(400).json({ error: 'One or more selected reports could not be found.' })
+    return
+  }
+
+  const reports = resolved.reports
 
   const aiGenerator =
     apiKey && !forceFallback

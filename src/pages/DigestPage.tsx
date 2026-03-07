@@ -6,6 +6,7 @@ import { generateFallbackDigest } from '../lib/fallback'
 import { useReportsStore } from '../lib/reportsContext'
 import {
   DigestSchema,
+  DigestResponseSchema,
   NEIGHBORHOODS,
   REPORT_CATEGORIES,
   SEVERITIES,
@@ -129,24 +130,37 @@ export function DigestPage() {
     setDigestState({ status: 'loading' })
 
     try {
+      // Best-effort sync: keeps the server’s canonical store aligned without using the digest route as an ingestion point.
+      try {
+        await fetch('/api/reports/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reports: selectedReports }),
+        })
+      } catch {
+        // ignore sync errors; the digest request may still succeed (seed IDs)
+      }
+
       const resp = await fetch('/api/digest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reports: selectedReports, force_fallback: forceFallback }),
+        body: JSON.stringify({ report_ids: selectedReports.map((r) => r.id), force_fallback: forceFallback }),
       })
 
       if (!resp.ok) {
         const text = await resp.text()
-        throw new Error(text || `Request failed: ${resp.status}`)
+        const message = text.includes('could not be found')
+          ? 'One or more selected reports could not be found. Generated a local rule-based digest instead.'
+          : `Request failed (${resp.status}). Generated a local rule-based digest instead.`
+        const digest = generateFallbackDigest(selectedReports)
+        setDigestState({ status: 'ready', digest, sourceReports: selectedReports, message })
+        return
       }
 
       const data = (await resp.json()) as unknown
-      const digest = DigestSchema.parse((data as { digest?: unknown }).digest)
-      const message =
-        typeof (data as { message?: unknown }).message === 'string'
-          ? ((data as { message?: string }).message ?? undefined)
-          : undefined
-      setDigestState({ status: 'ready', digest, sourceReports: selectedReports, message })
+      const parsed = DigestResponseSchema.parse(data)
+      const digest = DigestSchema.parse(parsed.digest)
+      setDigestState({ status: 'ready', digest, sourceReports: selectedReports, message: parsed.message })
     } catch {
       const digest = generateFallbackDigest(selectedReports)
       setDigestState({

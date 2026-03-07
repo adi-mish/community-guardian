@@ -95,11 +95,31 @@ export const DigestSchema = z.object({
 
 export type Digest = z.infer<typeof DigestSchema>
 
-export const DigestRequestSchema = z.object({
-  reports: z.array(ReportSchema).min(1, 'Select at least one report to generate a digest.'),
-})
+export const DigestIdRequestSchema = z
+  .object({
+    report_ids: z.array(z.string().trim().min(1)).min(1, 'Select at least one report to generate a digest.'),
+    force_fallback: z.boolean().optional(),
+  })
+  .strict()
 
-export type DigestRequest = z.infer<typeof DigestRequestSchema>
+export type DigestIdRequest = z.infer<typeof DigestIdRequestSchema>
+
+export const ReportsSyncRequestSchema = z
+  .object({
+    reports: z.array(ReportSchema).min(1),
+  })
+  .strict()
+
+export type ReportsSyncRequest = z.infer<typeof ReportsSyncRequestSchema>
+
+export const DigestResponseSchema = z
+  .object({
+    digest: DigestSchema,
+    message: z.string().trim().min(1).max(400).optional(),
+  })
+  .strict()
+
+export type DigestResponse = z.infer<typeof DigestResponseSchema>
 
 export const AiDigestOutputSchema = z.object({
   digest_title: z.string().trim().min(1).max(120),
