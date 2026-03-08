@@ -92,4 +92,4 @@ npm test
 
 ## Demo video
 
-- Not recorded in this run (add an external link here when available).
+- Vimeo: https://vimeo.com/1171590318?share=copy&fl=sv&fe=ci
