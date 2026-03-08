@@ -51,6 +51,7 @@ npm test
 
 ## AI disclosure (product behavior)
 
+- Did you use an AI assistant (Copilot, ChatGPT, etc.)? Yes.
 - **Single AI capability:** digest summarization + action checklist generation.
 - **Secrets:** `OPENAI_API_KEY` is read only by the local server (`server/`), never by the browser.
 - **Contract hardening:** the digest API accepts **report IDs only**; the server resolves canonical reports and rejects unknown IDs.
